@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{350B86DD-7EC8-4DAB-AC84-5519AF9CC59F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Domain</RootNamespace>
+    <AssemblyName>Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\Devolucao.cs" />
+    <Compile Include="Entities\DevolucaoProduto.cs" />
+    <Compile Include="Entities\Fabricante.cs" />
+    <Compile Include="Entities\LogSistema.cs" />
+    <Compile Include="Entities\Menu.cs" />
+    <Compile Include="Entities\Modelo.cs" />
+    <Compile Include="Entities\ModeloFabricante.cs" />
+    <Compile Include="Entities\Ocorrencia.cs" />
+    <Compile Include="Entities\Perfil.cs" />
+    <Compile Include="Entities\PerfilMenu.cs" />
+    <Compile Include="Entities\Produto.cs" />
+    <Compile Include="Entities\Venda.cs" />
+    <Compile Include="Entities\VendasProduto.cs" />
+    <Compile Include="Entities\Vendedor.cs" />
+    <Compile Include="Interfaces\Repositories\IDevolucaoProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IDevolucaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFabricanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ILogSistemaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMenuRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IModeloFabricanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IModeloRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IOcorrenciaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPerfilMenuRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPerfilRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
+    <Compile Include="Interfaces\Repositories\IVendaProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IVendaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IVendedorRepository.cs" />
+    <Compile Include="Interfaces\Services\ILogSistemaService.cs" />
+    <Compile Include="Interfaces\Services\IDevolucaoProdutoService.cs" />
+    <Compile Include="Interfaces\Services\IDevolucaoService.cs" />
+    <Compile Include="Interfaces\Services\IFabricanteService.cs" />
+    <Compile Include="Interfaces\Services\IMenuService.cs" />
+    <Compile Include="Interfaces\Services\IModeloFabricanteService.cs" />
+    <Compile Include="Interfaces\Services\IModeloService.cs" />
+    <Compile Include="Interfaces\Services\IOcorrenciaService.cs" />
+    <Compile Include="Interfaces\Services\IPerfilMenuService.cs" />
+    <Compile Include="Interfaces\Services\IPerfilService.cs" />
+    <Compile Include="Interfaces\Services\IProdutoService.cs" />
+    <Compile Include="Interfaces\Services\IVendaProdutoService.cs" />
+    <Compile Include="Interfaces\Services\IVendaService.cs" />
+    <Compile Include="Interfaces\Services\IVendedorService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\Services\IServiceBase.cs" />
+    <Compile Include="Services\LogSistemaService.cs" />
+    <Compile Include="Services\DevolucaoProdutoService.cs" />
+    <Compile Include="Services\DevolucaoService.cs" />
+    <Compile Include="Services\FabricanteService.cs" />
+    <Compile Include="Services\MenuService.cs" />
+    <Compile Include="Services\ModeloFabricanteService.cs" />
+    <Compile Include="Services\ModeloService.cs" />
+    <Compile Include="Services\OcorrenciaService.cs" />
+    <Compile Include="Services\PerfilMenuService.cs" />
+    <Compile Include="Services\PerfilService.cs" />
+    <Compile Include="Services\ProdutoService.cs" />
+    <Compile Include="Services\VendaProdutoService.cs" />
+    <Compile Include="Services\VendaService.cs" />
+    <Compile Include="Services\VendedorService.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

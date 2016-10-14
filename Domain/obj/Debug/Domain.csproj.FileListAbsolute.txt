@@ -1,0 +1,7 @@
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Debug\Domain.dll
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Debug\Domain.pdb
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Debug\PagedList.dll
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Debug\PagedList.xml
+C:\inetpub\wwwroot\ControllerWeb\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\inetpub\wwwroot\ControllerWeb\Domain\obj\Debug\Domain.dll
+C:\inetpub\wwwroot\ControllerWeb\Domain\obj\Debug\Domain.pdb

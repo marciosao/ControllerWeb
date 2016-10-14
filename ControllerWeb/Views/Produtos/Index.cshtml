@@ -1,0 +1,312 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.PesquisaProdutoViewModel
+
+@{
+    ViewBag.Title = "Produtos";
+}
+<script src="/Scripts/Views/Util.js"></script>
+<h2>Produtos</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Código")
+                    @Html.TextBox("Codigo", @Model.Codigo, new { @Id = "txtCodigo", @class = "form-control", @style = "width:100px", @maxlength = 20 })
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Nome")
+                    @Html.TextBox("Nome", @Model.Nome, new { @Id = "txtNome", @class = "form-control", @style = "width:300px", @maxlength = 50 })
+                </div>
+                <div class="col-md-2">
+                    <label>Fabricante</label>
+                    @*<input type="text" id="txtPesquisaFabricante" class="form-control" onkeyup="AoDigitarFabricante()" style="width:150px" />*@
+                    @Html.DropDownList("IdFabricante", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
+                </div>
+                @*<div class="boxFabricante col-md-2" id="DivFabricante">
+                    @{
+                        if (ViewBag.IdFabricante != null)
+                        {
+                            foreach (var item in ViewBag.IdFabricante)
+                            {
+                                @Html.RadioButton("IdFabricante2", (string)item.Value, false, new { @Id = "rbtFabricante", @class = "rbtFabricante" }) @Html.Raw(" " + item.Text + " ")<br />
+                            }
+                        }
+                    }
+                </div>*@
+                <div class="col-md-2">
+                    <label>Modelo</label>
+                    @*<input type="text" id="txtPesquisaModelo" class="form-control" onkeyup="AoDigitarModelo()" style="width:150px" />*@
+                    @Html.DropDownList("IdModelo", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
+                </div>
+                @*<div class="col-md-2 boxModelo" id="DivModelo">
+                    @{
+                        if (ViewBag.IdModelo != null)
+                        {
+                            foreach (var item in ViewBag.IdModelo)
+                            {
+                                @Html.RadioButton("IdModelo", (string)item.Value, false, new { @Id = "rbtModelo", @class = "rbtModelo" }) @Html.Raw(" " + item.Text + " ")<br />
+                            }
+                        }
+                    }
+                </div>*@
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="s2-example">
+                    <input type="submit" id="btnPesquisar" name="Index" value="Pesquisar" class="btn btn-mod-gray" />
+                    @Html.ActionLink("Novo Produto", "Create", "", new { @class = "btn btn-primary" })
+                </div>
+            </div>
+    </fieldset>
+    <p></p>
+    <table class="table">
+        <tr>
+            <th>
+                Código
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Fabricante
+            </th>
+            <th>
+                Modelo
+            </th>
+            <th>
+                Qtd. Estoque
+            </th>
+            <th>
+                Qtd. Min. Estoque
+            </th>
+            <th>
+                Avisa Estq. Mínimo?
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.ListaProdutosPaginado)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fabricante.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modelo.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QtdEstoque)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QtdMinimaEstoque)
+                </td>
+                <td>
+                    @{
+                        if (item.AvisaEstoqueMinimo)
+                        {
+                            @Html.Raw("Sim");
+                        }
+                        else
+                        {
+                            @Html.Raw("Não");
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdProduto }, new { @class = "fa fa-pencil-square-o fa-lg", @title = "Alterar Produto" }) |
+                    @Html.ActionLink(" ", "Details", new { id = item.IdProduto }, new { @class = "fa fa-file-text-o fa-lg ", @title = "Detalhes do Produto" }) |
+                    @*@Html.ActionLink(" ", "Delete", new { id = item.IdProduto }, new { @class = "fa fa-trash-o fa-lg", @title = "Excluir Produto" })*@
+                    @*@Html.ActionLink(" ", "Estoque", new { id = item.IdProduto }, new { @class = "fa fa-stack-overflow fa-lg", @title = "Adicionar Produto ao Estoque", @style = "color:red" })*@
+
+                    @Ajax.ActionLink(" ", "PesquisarProdutoAdicionarEstoque", "Produtos",
+                                                        new { pIdCodigoProduto = item.IdProduto },
+                                                        new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "ConteudoProdutos", OnSuccess = "OnExibirPopUpPesquisaProdutos", InsertionMode = InsertionMode.Replace },
+                                                        new { @class = "fa fa-stack-overflow fa-lg", @title = "Adicionar produto aos estoque", @style = "color:red", @Id = "btnPopUp" })
+
+                </td>
+            </tr>
+                        }
+
+    </table>
+    @Html.PagedListPager(Model.ListaProdutosPaginado, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                        <div class="pull-right"> Total de Registros: @Html.Raw(@Html.Raw(ViewBag.TotalRegistros))</div>
+                        }
+<!------------------------------------------------------------------- MODAL ----------------------------------------->
+<div class="modal" id="modalProdutos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 1100px; height:200px;margin: 0 auto; overflow: hidden;">
+        <div class="modal-content" style="margin-top: 30%; width: 90%; margin: 0 auto;">
+            <div class="modal-header" style="background-color: #3598D8; border-radius: 0 0 7px 7px;color:white;">
+                <button type="button" id="btnCloseModal" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="LabelModal">
+                    Adicionar produto ao estoque
+                </h4>
+            </div>
+            <div class="modal-body" style="height: 600px; overflow-y: auto;">
+                <div id="ConteudoProdutos">
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!------------------------------------------------------------------- MODAL ----------------------------------------->
+<script type="text/javascript">
+
+    function AoDigitarFabricante() {
+        if ($('#txtPesquisaFabricante') != "") {
+            var pFabricante = $('#txtPesquisaFabricante').val();
+            if (pFabricante != '' && pFabricante != 'undefined') {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Produtos/ObtemFabricantePorNome',
+                        dataType: 'html',
+                        cache: false,
+                        async: true,
+                        data: {
+                            'pIdFabricante': pFabricante
+                        },
+                        success: function (Result) {
+                            var items = '<div class="boxFabricante col-md-3" id="DivFabricante" style="background-color:lightgray">';
+                            var items = '';
+                            var rs = JSON.parse(Result);
+                            for (var i in rs) {
+                                console.log(rs[i].Value);
+                                items += "<input class='rbtFabricante' id='IdFabricante' name='IdFabricante' type='radio' value='" + rs[i].Value + "'/> " + rs[i].Text + " <br />";
+                            }
+                            items += "</div>"
+                            if (items == "") {
+                                items = 'Não existem Fabricantes com este nome';
+                            }
+
+                            $('#DivFabricante').html(items);
+                        }
+                    });
+            }
+        }
+    }
+
+    function AoDigitarModelo(elemento) {
+        if ($('#txtPesquisaModelo') != "") {
+            var pModelo = $('#txtPesquisaModelo').val();
+            if (pModelo != '' && pModelo != 'undefined') {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Produtos/ObtemModeloPorNome',
+                        dataType: 'html',
+                        cache: false,
+                        async: true,
+                        data: {
+                            'pModelo': pModelo
+                        },
+                        success: function (Result) {
+                            var items = '';
+                            var rs = JSON.parse(Result);
+                            for (var i in rs) {
+                                items += "<input class='rbtModelo' id='IdModelo' name='IdModelo' type='radio' value='" + rs[i].Value + "'/> " + rs[i].Text + " <br />";
+                            }
+
+                            if (items == "") {
+                                items = 'Não existem Modelos com este nome';
+                            }
+
+                            $('#DivModelo').html(items);
+                        }
+                    });
+            }
+        }
+    }
+
+    function OnExibirPopUpPesquisaProdutos(param) {
+        $('#modalProdutos').modal('show');
+    }
+
+
+    function AoDigitarQuantidadeEntrada() {
+        if ($('#qtdProdutoQuantidadeEntrada').val() != "") {
+            $('#btnAdicionar').css('display', 'block');
+        } else {
+            $('#btnAdicionar').css('display', 'none');
+        }
+    }
+
+    function AoClicarAdicionarQtdProduto() {
+        var lIdProduto = $('#IdProduto').val();
+        var lQuantidadeVendida = $('#qtdProdutoQuantidadeEntrada').val();
+
+        var ProdutoSelecionado = new Object();
+
+        ProdutoSelecionado.IdProduto = lIdProduto;
+        ProdutoSelecionado.QuantidadeVendida = lQuantidadeVendida;
+
+        $.ajax(
+            {
+                url: '/Produtos/GravarEntradaEstoque',
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    'ProdutoSelecionado': ProdutoSelecionado
+                })
+            }).done(function (result) {
+                if (result === "ok") {
+                    $('#modalProdutos').modal('hide');
+                    bootbox.dialog({
+                        message: 'Produto adicionado ao estoque com sucesso!',
+                        title: "Mensagem do Sistema",
+                        closeButton: true,
+                        buttons: {
+                            success: {
+                                label: "OK",
+                                callback: function () {
+
+                                    bootbox.hideAll();
+                                    window.location.href = '../../Produtos';
+                                }
+                            }
+                        }
+                    }).find('.modal-header').css({ 'background-color': '#3598D8', 'border-radius': '0 0 7px 7px', color: 'white' });
+                }
+            });
+
+    }
+
+    function AoClicarGerarRelatorio() {
+
+        var lCodigo = $('#txtCodigo').val();
+        var lNome = $('#txtNome').val();
+        var lFabricante = $('#IdFabricante').val();
+        var lModelo = $('#IdModelo').val();
+
+        var ProdutoSelecionado = new Object();
+
+        ProdutoSelecionado.Codigo = lCodigo;
+        ProdutoSelecionado.Nome = lNome;
+        ProdutoSelecionado.IdFabricante = lFabricante;
+        ProdutoSelecionado.IdModelo = lModelo;
+        $.ajax(
+            {
+                //url: '/Produtos/GerarRelatorio',
+                url: "@(Url.Action("GerarRelatorio", "Produtos"))",
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    'pProduto': ProdutoSelecionado
+                })
+            });
+    }
+
+</script>
+

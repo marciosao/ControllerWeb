@@ -1,0 +1,33 @@
+﻿@model Domain.Entities.Fabricante
+
+@{
+    ViewBag.Title = "Detalhes do Fabricante";
+}
+
+<h2>Detalhes do Fabricante</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ativo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.IdFabricante }, new { @class = "btn btn-primary" }) 
+    @Html.ActionLink("Voltar", "Index", "", new { @class = "btn btn-default" })
+</p>

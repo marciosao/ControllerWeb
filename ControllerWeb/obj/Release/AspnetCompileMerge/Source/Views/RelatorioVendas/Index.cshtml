@@ -1,0 +1,47 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.PesquisaVendasViewModel
+
+@{
+    ViewBag.Title = "Relatório de Vendas";
+}
+
+<h2>Relatório de Vendas</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Código")
+                    @Html.TextBox("Codigo", @Model.Codigo, new { @class = "form-control", @style = "width:100px", @maxlength = 20 })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Data da Venda")
+                    <input type="text" id="DataVenda" name="DataVenda" class="form-control" style="width:100px" />
+                </div>
+                <div class="col-md-2">
+                    <label>Vendedor</label>
+                    @*<div class="col-md-6">*@
+                    @*@Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "form-control" })<br />*@
+                    @Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })<br />
+                        @*@Html.DropDownList("IdVendedor", string.Empty)<br />*@
+                    @*</div>*@
+                </div>
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" id="btnGerarRelatorio" name="Index" value="Gerar Relatório" class="btn btn-mod-gray" />
+                </div>
+            </div>
+    </div>
+    </fieldset>
+}
+
+<script src="/Scripts/Views/Vendas/FiltrosPesquisa.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Iniciar.Inicializador();
+    });
+</script>

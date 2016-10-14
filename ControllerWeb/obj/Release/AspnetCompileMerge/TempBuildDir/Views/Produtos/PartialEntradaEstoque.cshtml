@@ -1,0 +1,67 @@
+﻿
+@model ControllerWeb.ViewModels.PesquisaProdutoViewModel
+@using (Html.BeginForm())
+{
+    <div id="DivTblProdutos">
+        <table class="table" width="1000px">
+            <tr>
+                <th width="30px">
+                    Código
+                </th>
+                <th  width="730px">
+                    Nome
+                </th>
+                <th width="100px">
+                    Fabricante
+                </th>
+                <th width="100px">
+                    Modelo
+                </th>
+                <th width="100px">
+                    Estoque
+                </th>
+                <th width="30px">
+                    Quantidade
+                </th>
+                <th width="10px"></th>
+            </tr>
+
+            @foreach (var item in Model.ListaProdutos)
+            {
+                <tr name="ProdutoSelecionado" ProdutoSelecionado="@item" idProdutoSelecionado="@item.IdProduto">
+                    <td width="10px" class="codigo-@item.IdProduto">
+                        <input type="text" hidden id="IdProduto" value="@item.IdProduto" />
+                        @Html.DisplayFor(modelItem => item.Codigo)
+                    </td>
+                    <td class="nome-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td width="100px" class="fabricante-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.Fabricante)
+                    </td>
+                    <td width="100px" class="modelo-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.Modelo)
+                    </td>
+                    <td width="100px" class="qtdestoque-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.QtdEstoque)
+                    </td>
+                    <td width="30px">
+                        @*<input type="text" class="prodVendido-@item.IdProduto" name="qtdProdutoQuantidadeEntrada" id="qtdProdutoQuantidadeEntrada" onclick="AoClicarQtdEstoque()" onkeyup="AoDigitarQuantidadeEntrada()" style="width:80px;text-align:right" />*@
+                        <input type="text" class="prodVendido-@item.IdProduto" name="qtdProdutoQuantidadeEntrada" id="qtdProdutoQuantidadeEntrada" onkeyup="AoDigitarQuantidadeEntrada()" style="width:80px;text-align:right" />
+                    </td>
+                    <td width="10px">
+                        <a><i id="btnAdicionar" class="fa fa-sign-in fa-lg" rel="tooltip" title="Adicionar ao estoque" style="cursor:pointer; display:none" onclick='AoClicarAdicionarQtdProduto(@item.IdProduto)'></i></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+}
+<script type="text/javascript">
+
+    function AoClicarQtdEstoque() {
+        $('#qtdProdutoQuantidadeEntrada').maskMoney();
+    }
+
+</script>

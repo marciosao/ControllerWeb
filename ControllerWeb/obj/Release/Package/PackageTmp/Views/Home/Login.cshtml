@@ -1,0 +1,70 @@
+﻿@model Domain.Entities.Vendedor
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>..:: Controller WEB ::..</title>
+    @Scripts.Render("~/Scripts/jquery-1.12.4.min.js")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@Styles.Render("~/Content/bootstrap.min.css")*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @*@Styles.Render("~/Content/Site.css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    @*@Scripts.Render("~/Scripts/jquery-2.2.4.min.js")*@
+    @*@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/Scripts/jquery.maskedinput-1.3.1.js")*@
+    @*@Styles.Render("~/Content/font-awesome.min.css")*@
+    @Styles.Render("~/Content/Login.css")
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-bottom:40px;">
+            <center>
+                <img src="~/img/nova_comcal.jpg" alt="Nova Comcal" rel="tooltip" title="Controller WEB - Sistema de Controle de Pisos" />
+            </center>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Efetue o Login</h3>
+                    </div>
+                    <div class="panel-body">
+                        @using (Html.BeginForm("Login","Home"))
+                        {
+                            <fieldset>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Matricula, new { @class = "form-control", maxlength = 30, placeholder = "Usuário" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.PasswordFor(model => model.Senha, new { @class = "form-control", maxlength = 15, placeholder = "Senha" })
+                                </div>
+                                <input class="btn btn-lg btn-info btn-block" type="submit" value="Entrar">
+                            </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+        <center>
+            
+        </center>
+                
+    </div>
+    @if (ViewBag.MsgErro > 0)
+    {
+        @Html.Action("PartialModalConfirmLogin", "Home")
+    }
+</body>
+</html>
+

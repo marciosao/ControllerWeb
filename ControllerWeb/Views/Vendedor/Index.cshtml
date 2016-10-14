@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Domain.Entities.Vendedor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Vendedor</h2>
+
+<p>
+    @Html.ActionLink("Novo Vendedor", "Create", "", new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Nome
+        </th>
+        <th>
+            Matrícula
+        </th>
+        <th>
+            Ativo
+        </th>
+        <th>
+            Perfil
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Matricula)
+        </td>
+        <td>
+            @{ 
+                if (item.Ativo)
+                {
+                    @Html.Raw("Sim");
+                }
+                else
+                {
+                    @Html.Raw("Não");
+                }
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Perfil.Nome)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id = item.IdVendedor }, new { @class = "fa fa-pencil-square-o fa-lg", @title = "Alterar Vendedor" }) |
+            @Html.ActionLink(" ", "Details", new { id = item.IdVendedor }, new { @class = "fa fa-file-text-o fa-lg ", @title = "Detalhes do Vendedor" })
+            @*@Html.ActionLink(" ", "Delete", new { id = item.IdProduto }, new { @class = "fa fa-trash-o fa-lg", @title = "Excluir Produto" })*@
+        </td>
+    </tr>
+}
+
+</table>

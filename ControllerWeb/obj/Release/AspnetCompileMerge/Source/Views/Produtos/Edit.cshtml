@@ -1,0 +1,203 @@
+﻿@using Domain.Entities
+@model Domain.Entities.Produto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Alterar Produto</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IdProduto)
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Código</label>
+                    @Html.EditorFor(model => model.Codigo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Codigo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Nome</label>
+                    @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                </div>
+                @{
+    var lNomeFabricante = string.Empty;
+    var lIdFabricante = string.Empty;
+    if (ViewBag.IdFabricante != null)
+    {
+        foreach (var item in ViewBag.IdFabricante)
+        {
+            lNomeFabricante = item.Text;
+            lIdFabricante = (string)item.Value;
+        }
+    }
+                }
+                <div class="col-md-2">
+                    <label>Fabricante</label>
+                    <input type="text" id="txtPesquisaFabricante" class="form-control" onkeyup="AoDigitarFabricante()" style="width:150px" value="@lNomeFabricante" />
+                    @*@Html.DropDownList("IdFabricante", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
+
+                    @Html.DropDownListFor(model => model.Fabricante, ((IEnumerable<Fabricante>)ViewBag.IdFabricante).Select(f => new SelectListItem
+               {
+                   Text = f.Nome,
+                   Value = f.IdFabricante.ToString(),
+                   Selected = (Model != null) && (Model.IdFabricante == f.IdFabricante)
+               }), "Escolha um Período", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible" })*@
+
+                </div>
+                <div class="boxFabricante col-md-2" id="DivFabricante">
+                    @{
+                        @Html.RadioButton("IdFabricante", lIdFabricante, false, new { @class = "rbtFabricante" }) @Html.Raw(" " + lNomeFabricante + " ")<br />
+                     }
+                    @Html.ValidationMessageFor(model => model.Fabricante, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @{
+    var lNomeModelo = string.Empty;
+    var lIdModelo = string.Empty;
+    if (ViewBag.IdModelo != null)
+    {
+        foreach (var item in ViewBag.IdModelo)
+        {
+            lNomeModelo = item.Text;
+            lIdModelo = (string)item.Value;
+        }
+    }
+                    }
+                    <label>Modelo</label>
+                    <input type="text" id="txtPesquisaModelo" class="form-control" onkeyup="AoDigitarModelo()" style="width:150px" value="@lNomeModelo" />
+                </div>
+                <div class="col-md-2 boxModelo" id="DivModelo">
+
+                    @{
+    //if (ViewBag.IdModelo != null)
+    //{
+    //    foreach (var item in ViewBag.IdModelo)
+    //    {
+    @*@Html.RadioButton("IdModelo", (string)item.Value, false, new { @class = "rbtModelo" }) @Html.Raw(" " + item.Text + " ")<br />*@
+                        @Html.RadioButton("IdModelo", lIdModelo, false, new { @class = "rbtModelo" }) @Html.Raw(" " + lNomeModelo + " ")<br />
+    //    }
+    //}
+                    }
+                    @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Qtd. Estoque</label>
+                    @Html.EditorFor(model => model.QtdEstoque, new { htmlAttributes = new { @class = "form-control", @style = "width:100px;" } })
+                    @Html.ValidationMessageFor(model => model.QtdEstoque, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3">
+                    <label>Qtd. Mínima em Estoque</label>
+                    @Html.EditorFor(model => model.QtdMinimaEstoque, new { htmlAttributes = new { @class = "form-control", @style = "width:100px;" } })
+                    @Html.ValidationMessageFor(model => model.QtdMinimaEstoque, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.AvisaEstoqueMinimo) <strong> Avisar quando estoque mínimo</strong>
+                </div>
+                <br />
+            </div>
+            <br />
+
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" value="Confirmar" class="btn btn-primary" />
+                    @Html.ActionLink("Voltar", "Index", "", new { @class = "btn btn-default" })
+                </div>
+            </div>
+
+        </div>
+    </fieldset>
+}
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    function AoDigitarFabricante() {
+        if ($('#txtPesquisaFabricante') != "") {
+            var pFabricante = $('#txtPesquisaFabricante').val();
+            if (pFabricante != '' && pFabricante != 'undefined') {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Produtos/ObtemFabricantePorNome',
+                        dataType: 'html',
+                        cache: false,
+                        async: true,
+                        data: {
+                            'pIdFabricante': pFabricante
+                        },
+                        success: function (Result) {
+                            //console.log(JSON.parse(Result));
+                            var items = '<div class="boxFabricante col-md-3" id="DivFabricante" style="background-color:lightgray">';
+                            var items = '';
+                            var rs = JSON.parse(Result);
+                            for (var i in rs) {
+                                //console.log(rs[i].Value);
+                                items += "<input class='rbtFabricante' id='IdFabricante' name='IdFabricante' type='radio' value='" + rs[i].Value + "'/> " + rs[i].Text + " <br />";
+                            }
+                            items += "</div>"
+                            if (items == "") {
+                                items = 'Não existem Fabricantes com este nome';
+                            }
+
+                            $('#DivFabricante').html(items);
+                        }
+                    });
+            }
+        }
+    }
+
+    function AoDigitarModelo(elemento) {
+        if ($('#txtPesquisaModelo') != "") {
+            var pModelo = $('#txtPesquisaModelo').val();
+            if (pModelo != '' && pModelo != 'undefined') {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Produtos/ObtemModeloPorNome',
+                        dataType: 'html',
+                        cache: false,
+                        async: true,
+                        data: {
+                            'pModelo': pModelo
+                        },
+                        success: function (Result) {
+                            //console.log(JSON.parse(Result));
+                            var items = '';
+                            var rs = JSON.parse(Result);
+                            for (var i in rs) {
+                                items += "<input class='rbtModelo' id='IdModelo' name='IdModelo' type='radio' value='" + rs[i].Value + "'/> " + rs[i].Text + " <br />";
+                            }
+
+                            if (items == "") {
+                                items = 'Não existem Modelos com este nome';
+                            }
+
+                            $('#DivModelo').html(items);
+                        }
+                    });
+            }
+        }
+    }
+
+</script>

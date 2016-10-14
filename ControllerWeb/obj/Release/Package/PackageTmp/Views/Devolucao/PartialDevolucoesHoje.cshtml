@@ -1,0 +1,30 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.DevolucaoViewModel
+
+@{
+    ViewBag.Title = "Devoluções cadastradas hoje";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Data Devolução
+        </th>
+        <th>
+            Vendedor
+        </th>
+    </tr>
+
+    @foreach (var item in Model.DevolucaoPaginada)
+    {
+        <tr>
+            <td>
+                @String.Format("{0:dd/MM/yyyy}", @item.DataDevolucao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendedor.Nome)
+            </td>
+        </tr>
+    }
+
+</table>

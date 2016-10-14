@@ -1,0 +1,30 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="modalConfirm2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top:30%;">
+            <div class="modal-header" style="background-color: #3598D8; border-radius: 0 0 7px 7px;color:white;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    @Html.Raw(ViewBag.TituloModal)
+                </h4>
+            </div>
+            <div class="modal-body">
+                @Html.Raw(ViewBag.MensagemModal)
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-mod-gray" data-dismiss="modal">
+                        Ok
+                    </button>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" href="/Scripts/jquery-1.10.2.js">
+    $(document).ready(function () {
+        $('#modalConfirm2').modal('show');
+    });
+</script>
+

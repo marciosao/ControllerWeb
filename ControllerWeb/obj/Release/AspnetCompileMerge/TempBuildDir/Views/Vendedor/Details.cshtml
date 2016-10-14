@@ -1,0 +1,57 @@
+﻿@model Domain.Entities.Vendedor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Dados do Vendedor</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Matricula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Matricula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Senha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Senha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ativo)
+        </dd>
+
+        <dt>
+            Perfil
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Perfil.Nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Confirmar", "Edit", new { id = Model.IdVendedor }, new {@class="btn btn-primary" }) 
+    @Html.ActionLink("Voltar", "Index","", new { @class = "btn btn-default" })
+</p>

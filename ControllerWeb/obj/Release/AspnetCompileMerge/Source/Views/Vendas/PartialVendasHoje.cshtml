@@ -1,0 +1,35 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.PesquisaVendasViewModel
+
+@{
+    ViewBag.Title = "Vendas Cadastradas Hoje";
+}
+<table class="table">
+    <tr>
+        <th>
+            Código
+        </th>
+        <th>
+            Data da Venda
+        </th>
+        <th>
+            Vendedor
+        </th>
+    </tr>
+
+    @foreach (var item in Model.VendasPaginadas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @String.Format("{0:dd/MM/yyyy}", @item.DataVenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendedor.Nome)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,81 @@
+﻿
+@model ControllerWeb.ViewModels.PesquisaProdutoViewModel
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Código")
+                    <input type="text" id="txtCodigo" class="form-control" onkeyup="AoDigitarCodigo()" style="width:150px" />
+                </div>
+            </div>
+            <p></p>
+        </div>
+    </fieldset>
+    <p></p>
+    <div id="DivTblProdutos">
+        <table class="table" width="1000px">
+            <tr>
+                <th width="10px"></th>
+                <th width="30px">
+                    Código
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th width="100px">
+                    Fabricante
+                </th>
+                <th width="100px">
+                    Modelo
+                </th>
+                <th width="100px">
+                    Qtd. Estoque
+                </th>
+                <th width="30px">
+                    Qtd. a Devolver
+                </th>
+                <th width="10px"></th>
+            </tr>
+
+            @foreach (var item in Model.ListaProdutos)
+            {
+                <tr name="ProdutoSelecionado" ProdutoSelecionado="@item">
+                    <td width="10px">
+                        <input type="radio" class="radio-inline" name="rbtProduto" id="rbtProduto" onclick='AoSelecionarProduto(this)' value="@item.IdProduto" />
+                    </td>
+                    <td width="10px" class="codigo-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.Codigo)
+                    </td>
+                    <td class="nome-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td width="100px" class="fabricante-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.Fabricante)
+                    </td>
+                    <td width="100px" class="modelo-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.Modelo)
+                    </td>
+                    <td width="100px" class="qtdestoque-@item.IdProduto">
+                        @Html.DisplayFor(modelItem => item.QtdEstoque)
+                    </td>
+                    <td width="30px">
+                        <input type="text" class="text-capitalize maskMoeda prodDevolvido-@item.IdProduto" name="qtdProdutoDevolvido" id="qtdProdutoDevolvido" onclick="AoClicarQuantidadeADevolver()" onkeyup="AoDigitarQuantidadeADevolver(@item.IdProduto)" width="30px" disabled="disabled" />
+                    </td>
+                    <td width="10px">
+                        <a><i id="btnAdicionar-@item.IdProduto" class="fa fa-reply-all fa-lg botaoAdicionar-@item.IdProduto" rel="tooltip" title="Adicionar à Devolução" style="cursor:pointer; display:none" onclick='AoClicarAdicionarProduto(@item.IdProduto)'></i></a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+}
+<script type="text/javascript">
+
+    function AoClicarQuantidadeADevolver() {
+        $('#qtdProdutoDevolvido').maskMoney();
+    }
+
+</script>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Domain.Entities.Perfil>
+
+@{
+    ViewBag.Title = "Perfil";
+}
+
+<h2>Perfil de Usuário</h2>
+
+<p>
+    @Html.ActionLink("Novo Perfil", "Create", "", new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            Tipo do Perfil
+        </th>
+        <th>
+            Super Usuario
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlagTipoPerfil)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.SuperUsuario)*@
+                @{
+        if (item.SuperUsuario)
+        {
+            @Html.Raw("Sim");
+        }
+        else
+        {
+            @Html.Raw("Não");
+        }
+                }
+
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.IdPerfil }, new { @class = "fa fa-pencil-square-o fa-lg", @title = "Alterar Perfil" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.IdPerfil }, new { @class = "fa fa-file-text-o fa-lg ", @title = "Detalhes do Perfil" }) 
+                @*@Html.ActionLink(" ", "Delete", new { id = item.IdPerfil }, new { @class = "fa fa-trash-o fa-lg", @title = "Excluir Perfil" })*@
+            </td>
+        </tr>
+    }
+
+</table>

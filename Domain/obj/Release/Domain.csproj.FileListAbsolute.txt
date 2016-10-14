@@ -1,0 +1,7 @@
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Release\Domain.dll
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Release\Domain.pdb
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Release\PagedList.dll
+C:\inetpub\wwwroot\ControllerWeb\Domain\bin\Release\PagedList.xml
+C:\inetpub\wwwroot\ControllerWeb\Domain\obj\Release\Domain.csprojResolveAssemblyReference.cache
+C:\inetpub\wwwroot\ControllerWeb\Domain\obj\Release\Domain.dll
+C:\inetpub\wwwroot\ControllerWeb\Domain\obj\Release\Domain.pdb

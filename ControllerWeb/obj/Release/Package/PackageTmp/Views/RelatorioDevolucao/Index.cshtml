@@ -1,0 +1,44 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.DevolucaoViewModel
+
+@{
+    ViewBag.Title = "Relatório de Devolução";
+}
+
+<h2> Relatório de Devolução de Produtos</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Data da Devolução")
+                    <input type="text" id="DataDevolucao" name="DataDevolucao" class="form-control" style="width:100px" />
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Produto")
+                    <input type="text" id="Produto" name="Produto" class="form-control" style="width:300px" hidden="hidden"/>
+                </div>
+                <div class="col-md-2">
+                    <label>Vendedor</label>
+                    @*@Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "form-control" })<br />*@
+                    @Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })<br />
+                </div>
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" id="btnGerarRelatorio" value="Gerar Relatório" class="btn btn-mod-gray" />
+                </div>
+            </div>
+        </div>
+    </fieldset>
+  }
+<p></p>
+<script src="/Scripts/Views/Devolucao/FiltrosPesquisa.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Iniciar.Inicializador();
+    });
+</script>

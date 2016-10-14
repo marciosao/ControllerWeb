@@ -1,0 +1,48 @@
+﻿@model Domain.Entities.Modelo
+
+@{
+    ViewBag.Title = "Cadastro de Modelo";
+}
+
+<h2>Cadastro de Modelo</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ativo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Ativo)
+                        @Html.ValidationMessageFor(model => model.Ativo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" value="Confirmar" class="btn btn-primary" />
+                    @Html.ActionLink("Voltar", "Index", "", new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

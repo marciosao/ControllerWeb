@@ -1,0 +1,102 @@
+﻿@*@model IEnumerable<Domain.Entities.Ocorrencia>*@
+@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.PesquisaOcorrenciaViewModel
+
+@{
+    ViewBag.Title = "Ocorrências";
+}
+
+<h2>Ocorrências</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Tipo de Evento</label>
+                    @Html.DropDownList("ListaTipoEvento", null, "Selecione", new { style = "width:150px", @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    <label>Vendedor</label>
+                    @Html.DropDownList("IdVendedor", null, "Selecione", new { style = "width:150px", @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Ocorrência a partir de")
+                    <input type="text" id="DataOcorrencia" name="DataOcorrencia" class="form-control" style="width:100px" />
+                </div>
+                @*<div class="col-md-4">
+                    @Html.Label("Produto")
+                    <input type="text" id="Produto" name="Produto" class="form-control" style="width:200px" />
+                </div>*@
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" id="btnPesquisar" name="Index" value="Pesquisar" class="btn btn-mod-gray" />
+                    @*<input type="button" value="Gerar Relatório" class="btn btn-mod-gray" onclick="location.href='@Url.Action("GerarRelatorio", "Ocorrencia")'" />*@
+
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Tipo de Evento
+            </th>
+            <th>
+                Produto
+            </th>
+            <th>
+                Quantidade
+            </th>
+            <th>
+                Data da Ocorrência
+            </th>
+            <th>
+                Vendedor
+            </th>
+        </tr>
+
+        @{
+    if (Model.OcorrenciasPaginadas.Count > 0)
+    {
+        foreach (var item in Model.OcorrenciasPaginadas)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdDevolucao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoEvento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QtdProduto)
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy}", @item.DataOcorrencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Usuario)
+                </td>
+            </tr>
+        }
+    }
+        }
+    </table>
+    @Html.PagedListPager(Model.OcorrenciasPaginadas, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    <div class="pull-right"> Total de Registros: @Html.Raw(@Html.Raw(ViewBag.TotalRegistros))</div>
+}
+<script src="/Scripts/Views/Ocorrencia/FiltrosPesquisa.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Iniciar.Inicializador();
+    });
+</script>

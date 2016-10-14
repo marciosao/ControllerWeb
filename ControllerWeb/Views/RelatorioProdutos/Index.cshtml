@@ -1,0 +1,172 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.PesquisaProdutoViewModel
+
+@{
+    ViewBag.Title = "Relatório de Produtos";
+}
+<script src="/Scripts/Views/Util.js"></script>
+<h2>Relatório de Produtos</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Código")
+                    @Html.TextBox("Codigo", @Model.Codigo, new { @Id = "txtCodigo", @class = "form-control", @style = "width:100px", @maxlength = 20 })
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Nome")
+                    @Html.TextBox("Nome", @Model.Nome, new { @Id = "txtNome", @class = "form-control", @style = "width:300px", @maxlength = 50 })
+                </div>
+                <div class="col-md-2">
+                    <label>Fabricante</label>
+                    @*<input type="text" id="txtPesquisaFabricante" class="form-control" onkeyup="AoDigitarFabricante()" style="width:150px" />*@
+                    @Html.DropDownList("IdFabricante", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
+                </div>
+                @*<div class="boxFabricante col-md-2" id="DivFabricante">
+                    @{
+                        if (ViewBag.IdFabricante != null)
+                        {
+                            foreach (var item in ViewBag.IdFabricante)
+                            {
+                    @Html.RadioButton("IdFabricante", (string)item.Value, false, new { @Id = "rbtFabricante", @class = "rbtFabricante" }) @Html.Raw(" " + item.Text + " ")<br />
+                            }
+                        }
+                    }
+                </div>*@
+                <div class="col-md-2">
+                    <label>Modelo</label>
+                    @*<input type="text" id="txtPesquisaModelo" class="form-control" onkeyup="AoDigitarModelo()" style="width:150px" />*@
+                    @Html.DropDownList("IdModelo", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
+                </div>
+                @*<div class="col-md-2 boxModelo" id="DivModelo">
+                    @{
+                        if (ViewBag.IdModelo != null)
+                        {
+                            foreach (var item in ViewBag.IdModelo)
+                            {
+                    @Html.RadioButton("IdModelo", (string)item.Value, false, new { @Id = "rbtModelo", @class = "rbtModelo" }) @Html.Raw(" " + item.Text + " ")<br />
+                            }
+                        }
+                    }
+                </div>*@
+            </div>
+            <p></p>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Quantidade em Estoque</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    @Html.RadioButton("FiltroQtdEstoque", "0", false, new { @Id = "FiltroQtdEstoque", @class = "FiltroQtdEstoque", @checked = "checked" }) @Html.Raw("Todos") &nbsp;&nbsp;
+                    @Html.RadioButton("FiltroQtdEstoque", "1", false, new { @Id = "FiltroQtdEstoque", @class = "FiltroQtdEstoque" }) @Html.Raw("Estoque Zerado")&nbsp;&nbsp;
+                    @Html.RadioButton("FiltroQtdEstoque", "2", false, new { @Id = "FiltroQtdEstoque", @class = "FiltroQtdEstoque" }) @Html.Raw("Disponivel no Estoque")&nbsp;&nbsp;
+                    @Html.RadioButton("FiltroQtdEstoque", "3", false, new { @Id = "FiltroQtdEstoque", @class = "FiltroQtdEstoque" }) @Html.Raw("Abaixo Estoque Mínimo")
+                </div>
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" id="btnGerarRelatorio" name="Gerar Relatório" value="Gerar Relatório" class="btn btn-mod-gray" />
+                </div>
+            </div>
+    </fieldset>
+}
+<script type="text/javascript">
+
+    function AoDigitarFabricante() {
+        if ($('#txtPesquisaFabricante') != "") {
+            var pFabricante = $('#txtPesquisaFabricante').val();
+            if (pFabricante != '' && pFabricante != 'undefined') {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Produtos/ObtemFabricantePorNome',
+                        dataType: 'html',
+                        cache: false,
+                        async: true,
+                        data: {
+                            'pIdFabricante': pFabricante
+                        },
+                        success: function (Result) {
+                            //console.log(JSON.parse(Result));
+                            var items = '<div class="boxFabricante col-md-3" id="DivFabricante" style="background-color:lightgray">';
+                            var items = '';
+                            var rs = JSON.parse(Result);
+                            for (var i in rs) {
+                                //console.log(rs[i].Value);
+                                items += "<input class='rbtFabricante' id='IdFabricante' name='IdFabricante' type='radio' value='" + rs[i].Value + "'/> " + rs[i].Text + " <br />";
+                            }
+                            items += "</div>"
+                            if (items == "") {
+                                items = 'Não existem Fabricantes com este nome';
+                            }
+
+                            $('#DivFabricante').html(items);
+                        }
+                    });
+            }
+        }
+    }
+
+    function AoDigitarModelo(elemento) {
+        if ($('#txtPesquisaModelo') != "") {
+            var pModelo = $('#txtPesquisaModelo').val();
+            if (pModelo != '' && pModelo != 'undefined') {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Produtos/ObtemModeloPorNome',
+                        dataType: 'html',
+                        cache: false,
+                        async: true,
+                        data: {
+                            'pModelo': pModelo
+                        },
+                        success: function (Result) {
+                            //console.log(JSON.parse(Result));
+                            var items = '';
+                            var rs = JSON.parse(Result);
+                            for (var i in rs) {
+                                items += "<input class='rbtModelo' id='IdModelo' name='IdModelo' type='radio' value='" + rs[i].Value + "'/> " + rs[i].Text + " <br />";
+                            }
+
+                            if (items == "") {
+                                items = 'Não existem Modelos com este nome';
+                            }
+
+                            $('#DivModelo').html(items);
+                        }
+                    });
+            }
+        }
+    }
+
+    function AoClicarGerarRelatorio() {
+
+        var lCodigo = $('#txtCodigo').val();
+        var lNome = $('#txtNome').val();
+        var lFabricante = $('#IdFabricante').val();
+        var lModelo = $('#IdModelo').val();
+
+        var ProdutoSelecionado = new Object();
+
+        ProdutoSelecionado.Codigo = lCodigo;
+        ProdutoSelecionado.Nome = lNome;
+        ProdutoSelecionado.IdFabricante = lFabricante;
+        ProdutoSelecionado.IdModelo = lModelo;
+        $.ajax(
+            {
+                url: "@(Url.Action("GerarRelatorio", "Produtos"))",
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    'pProduto': ProdutoSelecionado
+                })
+            });
+    }
+</script>
+

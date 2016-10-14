@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "Controller Web";
+}
+
+<div class="jumbotron">
+    <h1>Comcal Controller Web</h1>
+    <p class="lead">Controller Web é um sistema de controle de estoque de pisos e revestimentos da Comcal</p>
+    <p><a href="#" class="btn btn-primary btn-lg">Leia mais &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Itens sem estoque</h2>
+        <p>
+            Painel que mostra os itens que estão com estoque zerado.
+        </p>
+        <p>
+            @*<a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Veja &raquo;</a>*@
+
+        @Ajax.ActionLink("Veja >>", "PesquisarItensEstoqueZerado", "Produtos",
+                        null,
+                        new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "ConteudoItensEstoqueZerado", OnSuccess = "OnExibirPopUpPesquisaProdutos", InsertionMode = InsertionMode.Replace },
+                       new { @class = "btn btn-default", @title = "modalItensEstoqueZerado", @Id = "btnPopUpItensEstoqueZerado" })
+
+    </p>
+</div>
+<div class="col-md-4">
+    @{
+        string lDataHoje = DateTime.Now.ToShortDateString();
+    }
+
+    <h2>Vendas</h2>
+    <p>Painel que permite visualizar as vendas cadastradas hoje, @lDataHoje </p>
+    <p>@*<a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Veja &raquo;</a>*@
+        @Ajax.ActionLink("Veja >>", "PesquisarVendasHoje", "Vendas",
+                        null,
+                        new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "ConteudoVendasHoje", OnSuccess = "OnExibirPopUpVendasHoje", InsertionMode = InsertionMode.Replace },
+                       new { @class = "btn btn-default", @title = "modalVendasHoje", @Id = "btnPopUpVendasHoje" })
+    </p>
+</div>
+<div class="col-md-4">
+    <h2>Devoluções</h2>
+    <p>Painel que permite visualizar as devoluções realizadas hoje, @lDataHoje </p>
+    <p>@*<a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Veja &raquo;</a>*@
+        @Ajax.ActionLink("Veja >>", "PesquisarDevolucoesHoje", "Devolucao",
+                        null,
+                        new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "ConteudoDevolucoesHoje", OnSuccess = "OnExibirPopUpDevolucoesHoje", InsertionMode = InsertionMode.Replace },
+                       new { @class = "btn btn-default", @title = "modalDevolucoesHoje", @Id = "btnPopUpDevolucoesHoje" })
+    </p>
+</div>
+</div>
+
+<!------------------------------------------------------------------- MODAL Itens Estoque Zerado----------------------------------------->
+<div class="modal" id="modalItensEstoqueZerado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 1100px; height:500px;margin: 0 auto; overflow: hidden;">
+        <div class="modal-content" style="margin-top: 30%; width: 90%; margin: 0 auto;">
+            <div class="modal-header" style="background-color: #3598D8; border-radius: 0 0 7px 7px;color:white;">
+                <button type="button" id="btnCloseModal" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="LabelModal">
+                    Itens com Estoque Zerado
+                </h4>
+            </div>
+            <div class="modal-body" style="height: 600px; overflow-y: auto;">
+                <div id="ConteudoItensEstoqueZerado">
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--------------------------------------------------------------------------------------------------------------------------------------->
+
+<!------------------------------------------------------------------- MODAL Vendas de Hoje----------------------------------------------->
+<div class="modal" id="modalVendasHoje" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 1100px; height:500px;margin: 0 auto; overflow: hidden;">
+        <div class="modal-content" style="margin-top: 30%; width: 90%; margin: 0 auto;">
+            <div class="modal-header" style="background-color: #3598D8; border-radius: 0 0 7px 7px;color:white;">
+                <button type="button" id="btnCloseModal" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="LabelModal">
+                    Vendas de Hoje
+                </h4>
+            </div>
+            <div class="modal-body" style="height: 600px; overflow-y: auto;">
+                <div id="ConteudoVendasHoje">
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--------------------------------------------------------------------------------------------------------------------------------------->
+
+<!------------------------------------------------------------------- MODAL Devoluções de Hoje------------------------------------------->
+<div class="modal" id="modalDevolucoesHoje" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 1100px; height:500px;margin: 0 auto; overflow: hidden;">
+        <div class="modal-content" style="margin-top: 30%; width: 90%; margin: 0 auto;">
+            <div class="modal-header" style="background-color: #3598D8; border-radius: 0 0 7px 7px;color:white;">
+                <button type="button" id="btnCloseModal" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="LabelModal">
+                    Devoluções de Hoje
+                </h4>
+            </div>
+            <div class="modal-body" style="height: 600px; overflow-y: auto;">
+                <div id="ConteudoDevolucoesHoje">
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--------------------------------------------------------------------------------------------------------------------------------------->
+
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    Iniciar.Inicializador();
+    //});
+
+    function OnExibirPopUpPesquisaProdutos(param) {
+        $('#modalItensEstoqueZerado').modal('show');
+    }
+
+    function OnExibirPopUpVendasHoje(param) {
+        $('#modalVendasHoje').modal('show');
+    }
+
+    function OnExibirPopUpDevolucoesHoje(param) {
+        $('#modalDevolucoesHoje').modal('show');
+    }
+
+    
+</script>

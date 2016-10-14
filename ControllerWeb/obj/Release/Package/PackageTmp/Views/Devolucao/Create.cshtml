@@ -1,0 +1,359 @@
+﻿@model Domain.Entities.Devolucao
+
+@{
+    ViewBag.Title = "Devolução";
+}
+
+<h2>Devolução de Produtos</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Vendedor", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "form-control" })<br />*@
+                @Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })<br />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Data da Devolução", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="DataDevolucao" name="DataDevolucao" class="form-control" style="width:100px" value="@ViewBag.DataDevolucao" />
+                @Html.ValidationMessageFor(model => model.DataDevolucao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Ajax.ActionLink("Selecionar Produtos", "PesquisarProdutosDevolucao", "Devolucao",
+                        null,
+                        new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "ConteudoProdutos", OnSuccess = "OnExibirPopUpPesquisaProdutos", InsertionMode = InsertionMode.Replace },
+                       new { @class = "btn btn-default", @title = "Produtos", @Id = "btnPopUp" })
+            </div>
+        </div>
+
+    </div>
+
+    <p></p>
+        <div id="DivTblProdutosSelecionados">
+            <table class="table">
+                <tr>
+                    <th hidden="hidden"></th>
+                    <th width="30px">
+                        Código
+                    </th>
+                    <th width="350px">
+                        Nome
+                    </th>
+                    <th width="100px">
+                        Fabricante
+                    </th>
+                    <th width="100px">
+                        Modelo
+                    </th>
+                    <th width="50px">
+                        Qtd. Devolvida
+                    </th>
+                    <th width="10px">
+
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <p></p>
+        <br />
+        <br />
+
+}
+
+<div>
+    <input type="button" id="btnGravar" name="Create" value="Confitmar" class="btn btn-primary" onclick="AoClicarGravarDevolucao()" />
+    @Html.ActionLink("Voltar", "Index", "", new { @class = "btn btn-default" })
+</div>
+
+    <!------------------------------------------------------------------- MODAL ----------------------------------------->
+<div class="modal" id="modalProdutos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 1100px; height:500px;margin: 0 auto; overflow: hidden;">
+        <div class="modal-content" style="margin-top: 30%; width: 90%; margin: 0 auto;">
+            <div class="modal-header" style="background-color: #3598D8; border-radius: 0 0 7px 7px;color:white;">
+                <button type="button" id="btnCloseModal" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="LabelModal">
+                    Pesquisa de Produtos para devolução
+                </h4>
+            </div>
+            <div class="modal-body" style="height: 600px; overflow-y: auto;">
+                <div id="ConteudoProdutos">
+
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="submit" class="btn btn-default" data-dismiss="modal" name="OK">Close</button>
+                </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!------------------------------------------------------------------- MODAL ----------------------------------------->
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="/Scripts/Views/Devolucao/Create.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Iniciar.Inicializador();
+    });
+
+    function OnExibirPopUpPesquisaProdutos(param) {
+        $('#modalProdutos').modal('show');
+    }
+
+    function AoDigitarCodigo() {
+        if ($('#txtCodigo') != "") {
+            var pCodigo = $('#txtCodigo').val();
+            if (pCodigo != '' && pCodigo != 'undefined') {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/Vendas/ObtemFabricantePorCodigo',
+                        dataType: 'html',
+                        cache: false,
+                        async: true,
+                        data: {
+                            'pCodigo': pCodigo
+                        },
+                        success: function (Result) {
+                            var items = '';
+                            items += "<table class='table'>"
+                            items += "    <tr>"
+                            items += "        <td></td>"
+                            items += "        <td>"
+                            items += "            Código"
+                            items += "        </td>"
+                            items += "        <td>"
+                            items += "            Nome"
+                            items += "        </td>"
+                            items += "        <td>"
+                            items += "            Fabricante"
+                            items += "        </td>"
+                            items += "        <td>"
+                            items += "            Modelo"
+                            items += "        </td>"
+                            items += "        <td>"
+                            items += "            Qtd. Estoque"
+                            items += "        </td>"
+                            items += "        <td width='30px'>"
+                            items += "            Qtd. a Devolver"
+                            items += "        </td>"
+                            items += "        <td></td>"
+                            items += "    </tr>"
+
+                            var rs = JSON.parse(Result);
+                            for (var i in rs) {
+                                items += "<tr>"
+                                items += "        <td>"
+                                items += "          <input type='radio' class='radio-inline' name='rbtProduto' id='rbtProduto' value='" + rs[i].IdProduto + "' onclick='AoSelecionarProduto(this)'/>"
+                                items += "        </td>"
+                                items += "        <td class='codigo-" + rs[i].IdProduto + "'>"
+                                items += "            " + rs[i].Codigo
+                                items += "        </td>"
+                                items += "        <td class='nome-" + rs[i].IdProduto + "'>"
+                                items += "            " + rs[i].Nome
+                                items += "        </td>"
+                                items += "        <td class='fabricante-" + rs[i].IdProduto + "'>"
+                                items += "            " + rs[i].Fabricante
+                                items += "        </td>"
+                                items += "        <td class='modelo-" + rs[i].IdProduto + "'>"
+                                items += "            " + rs[i].Modelo
+                                items += "        </td>"
+                                items += "        <td class='qtdestoque-" + rs[i].IdProduto + "'>"
+                                items += "            " + rs[i].QtdEstoque
+                                items += "        </td>"
+                                items += "        <td>"
+                                items += "            <input type='text' class='text-capitalize prodDevolvido-" + rs[i].IdProduto + "' name='qtdProdutoDevolvido' id='qtdProdutoDevolvido" + rs[i].IdProduto + "' width='30px' onkeyup='AoDigitarQuantidadeADevolver(" + rs[i].IdProduto + ")' disabled='disabled'/>"
+                                items += "        </td>"
+                                items += "        <td>"
+                                items += "          <a><i id='btnAdicionar-" + rs[i].IdProduto + "' class='fa fa-reply-all fa-lg' rel='tooltip' title='Adicionar para devolução' style='cursor:pointer;'  hidden='hidden' onclick='AoClicarAdicionarProduto(" + rs[i].IdProduto + ")'></i></a>"
+                                items += "        </td>"
+                                items += "</tr>"
+                            }
+
+                            items += "</table>"
+
+                            if (items == "") {
+                                items = 'Não existem Produtos com este código';
+                            }
+
+                            $('#DivTblProdutos').html(items);
+                        }
+                    });
+            }
+        }
+    }
+
+    function AoSelecionarProduto(elemento) {
+        $('#qtdProdutoDevolvido').attr('disabled', true);
+
+        if ($(elemento).is(':checked')) {
+            $('.prodDevolvido-'+$(elemento).val()).attr('disabled', false)
+        }
+    }
+
+    function AoDigitarQuantidadeADevolver(idProduto) {
+        if ($('#qtdProdutoDevolvido' + idProduto).val() != "") {
+            $('#btnAdicionar-' + idProduto).css('display', 'block');
+        } else {
+            $('#btnAdicionar-' + idProduto).css('display', 'none');
+        }
+    }
+
+    function AoClicarAdicionarProduto(idProduto) {
+        var items = '';
+        if (idProduto != '' && idProduto != 'undefined') {
+            items += " <tr class='" + idProduto + " ProdutoSelecionado'  name='ProdutoSelecionado' idProdutoSelecionado='" + idProduto + "' data-QdtDevolvida='" + $('.prodDevolvido-' + idProduto).val() + "'>"
+            items += "        <td width='30px'>"
+            items += "            " + $('.codigo-' + idProduto).html();
+            items += "        </td>"
+            items += "        <td width='350px'>"
+            items += "            " + $('.nome-' + idProduto).html();
+            items += "        </td>"
+            items += "        <td width='100px'>"
+            items += "            " + $('.fabricante-' + idProduto).html();
+            items += "        </td>"
+            items += "        <td width='100px'>"
+            items += "            " + $('.modelo-' + idProduto).html();
+            items += "        </td>"
+            //items += "        <td>"
+            //items += "            " + $('.qtdestoque-' + idProduto).html();
+            //items += "        </td>"
+            items += "        <td  width='50px'>"
+            items += "            " + $('.prodDevolvido-' + idProduto).val();
+            items += "        </td>"
+            items += "        <td width='10px'>"
+            items += "          <a><i class='fa fa-trash fa-lg' rel='tooltip' title='excluir produto' style='cursor:pointer;'  hidden='hidden' onclick='AoClicarExcluirProduto(" + idProduto + ")'></i></a>"
+            items += "        </td> "
+            items += " </tr>"
+        }
+
+        if (items == "") {
+            items = 'Não existem Produtos com este código';
+        }
+
+        $('#DivTblProdutosSelecionados table').append(items);
+
+        //$('#txtCodigo').val() = '';
+
+    }
+
+    function AoClicarExcluirProduto(idProduto) {
+        $('#DivTblProdutosSelecionados table .' + idProduto).remove();
+    }
+
+    function AoClicarGravarDevolucao() {
+        var lListaProdutos = [];
+        var lListaProdutosSelecionados = new Array();
+
+        var pDataDevolucao = $('#DataDevolucao').val();
+        var lVendedor = $('#IdVendedor').val();
+
+        $('.ProdutoSelecionado').each(function (indice, lElemento) {
+
+            var ProdutoSelecionado = new Object();
+
+            ProdutoSelecionado.IdProduto = $(lElemento).attr('idProdutoSelecionado');
+            ProdutoSelecionado.QuantidadeVendida = $(lElemento).attr('data-QdtDevolvida');
+
+
+            lListaProdutosSelecionados.push(ProdutoSelecionado);
+
+        });
+        if (pDataDevolucao != "" && lVendedor != "" && lListaProdutosSelecionados.length > 0)
+        {
+            $.ajax(
+                {
+                    url: '/Devolucao/GravarDevolucao',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+                        'pDataDevolucao': pDataDevolucao,
+                        'pVendedor': lVendedor,
+                        'ProdutoSelecionado': lListaProdutosSelecionados
+                    }),
+                    success: function (result) {
+                        if (result == 'ok') {
+                            bootbox.dialog({
+                                message: "Devolução cadastrada com sucesso!",
+                                title: "Mensagem do Sistema",
+                                closeButton: true,
+                                buttons: {
+                                    success: {
+                                        label: "OK",
+                                        callback: function () {
+                                            bootbox.hideAll();
+                                            window.location.href = '../Devolucao';
+                                        }
+                                    }
+                                }
+                            }).find('.modal-header').css({ 'background-color': '#3598D8', 'border-radius': '0 0 7px 7px', color: 'white' });
+
+                        } else {
+                            bootbox.dialog({
+                                message: result,
+                                title: "Mensagem do Sistema",
+                                closeButton: true,
+                                buttons: {
+                                    success: {
+                                        label: "OK",
+                                        callback: function () {
+                                            bootbox.hideAll();
+                                        }
+                                    }
+                                }
+                            }).find('.modal-header').css({ 'background-color': '#3598D8', 'border-radius': '0 0 7px 7px', color: 'white' });
+                        }
+                    }
+                });
+        } else {
+            //--------------------
+            var CamposObrigatorios = " O(s) campo(s) obrigatório(s) ";
+
+            if (pDataDevolucao == "") {
+                CamposObrigatorios += "Data da Devolução ";
+            }
+
+            if (lVendedor == "") {
+                CamposObrigatorios += "Vendedor ";
+            }
+            if (lListaProdutosSelecionados.length == 0) {
+                CamposObrigatorios += " Produto "
+            }
+
+            CamposObrigatorios += " não foram preenchidos."
+
+            bootbox.dialog({
+                message: CamposObrigatorios,
+                title: "Mensagem do Sistema",
+                closeButton: true,
+                buttons: {
+                    success: {
+                        label: "OK",
+                        callback: function () {
+                            bootbox.hideAll();
+                        }
+                    }
+                }
+            }).find('.modal-header').css({ 'background-color': '#3598D8', 'border-radius': '0 0 7px 7px', color: 'white' });
+            //--------------------
+        }
+    }
+
+</script>
+

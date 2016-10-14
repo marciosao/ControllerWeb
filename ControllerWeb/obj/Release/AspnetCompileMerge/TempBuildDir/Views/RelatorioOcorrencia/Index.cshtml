@@ -1,0 +1,40 @@
+﻿@model ControllerWeb.ViewModels.PesquisaOcorrenciaViewModel
+
+@{
+    ViewBag.Title = "Relatório de Ocorrências";
+}
+
+<h2>Relatório de Ocorrências</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Tipo de Evento</label>
+                    @Html.DropDownList("ListaTipoEvento", null, "Selecione", new { style = "width:150px", @class = "form-control" })
+                </div>
+                <div class="col-md-2">
+                    <label>Vendedor</label>
+                    @Html.DropDownList("IdVendedor", null, "Selecione", new { style = "width:150px", @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Ocorrência a partir de")
+                    <input type="text" id="DataOcorrencia" name="DataOcorrencia" class="form-control" style="width:100px" />
+                </div>
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" id="btnGerarRelatorio" value="Gerar Relatório" class="btn btn-mod-gray" />
+            </div>
+        </div>
+    </fieldset>
+}
+<script src="/Scripts/Views/Ocorrencia/FiltrosPesquisa.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Iniciar.Inicializador();
+    });
+</script>

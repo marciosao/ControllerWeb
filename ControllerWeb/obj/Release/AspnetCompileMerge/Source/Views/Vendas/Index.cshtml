@@ -1,0 +1,84 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.PesquisaVendasViewModel
+
+@{
+    ViewBag.Title = "Vendas";
+}
+
+<h2>Vendas</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Código")
+                    @Html.TextBox("Codigo", @Model.Codigo, new { @class = "form-control", @style = "width:100px", @maxlength = 20 })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Data da Venda")
+                    <input type="text" id="DataVenda" name="DataVenda" class="form-control" style="width:100px" />
+                </div>
+                <div class="col-md-2">
+                    <label>Vendedor</label>
+                    @*@Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "form-control", @name = "IdVendedor" })<br />*@
+                    @Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })<br />
+                </div>
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" id="btnPesquisar" name="Index" value="Pesquisar" class="btn btn-mod-gray" />
+                    @Html.ActionLink("Nova Venda", "Create", "", new { @class = "btn btn-primary" })
+                    @*@Html.ActionLink("Gerar Relatório", "GerarRelatorio", "", new { @class = "btn btn-default" })*@
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <p></p>
+    <table class="table">
+        <tr>
+            <th>
+                Código
+            </th>
+            <th>
+                Data da Venda
+            </th>
+            <th>
+                Vendedor
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model.VendasPaginadas)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @String.Format("{0:dd/MM/yyyy}", @item.DataVenda)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vendedor.Nome)
+                </td>
+                <td>
+                    @*@Html.ActionLink(" ", "Details", new { id = item.IdVenda }, new { @class = "fa fa-file-text-o fa-lg ", @title = "Detalhes da Venda" })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+    @Html.PagedListPager(Model.VendasPaginadas, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    <div class="pull-right"> Total de Registros: @Html.Raw(@Html.Raw(ViewBag.TotalRegistros))</div>
+}
+
+<script src="/Scripts/Views/Vendas/FiltrosPesquisa.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Iniciar.Inicializador();
+    });
+</script>

@@ -1,0 +1,79 @@
+﻿@using PagedList.Mvc;
+@model ControllerWeb.ViewModels.DevolucaoViewModel
+
+@{
+    ViewBag.Title = "Devolução";
+}
+
+<h2>Devolução de Produtos</h2>
+@using (Html.BeginForm())
+{
+    <fieldset class="fieldset">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Data da Devolução")
+                    <input type="text" id="DataDevolucao" name="DataDevolucao" class="form-control" style="width:100px" />
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Produto")
+                    <input type="text" id="Produto" name="Produto" class="form-control" style="width:300px" />
+                </div>
+                <div class="col-md-2">
+                    <label>Vendedor</label>
+                    @*@Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "form-control" })<br />*@
+                    @Html.DropDownList("IdVendedor", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })<br />
+                </div>
+            </div>
+            <p></p>
+            <div class="row  pull-right">
+                <div class="col-xs-12">
+                    <input type="submit" id="btnPesquisar" name="Index" value="Pesquisar" class="btn btn-mod-gray" />
+                    @Html.ActionLink("Nova Devolução", "Create", "", new { @class = "btn btn-primary" })
+
+                </div>
+            </div>
+        </div>
+    </fieldset>
+  }
+<p></p>
+<table class="table">
+    <tr>
+        <th>
+            Data Devolução
+        </th>
+        <th>
+            Vendedor
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.DevolucaoPaginada)
+    {
+        <tr>
+            <td>
+                @String.Format("{0:dd/MM/yyyy}", @item.DataDevolucao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendedor.Nome)
+            </td>
+            <td>
+                @*@Html.ActionLink(" ", "Edit", "Devolucao", new { id = item.IdDevolucao }, new { @class = "fa fa-pencil-square-o fa-lg", @title = "Alterar Devolução" })*@
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.IdDevolucao }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.IdDevolucao }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.IdDevolucao })*@
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model.DevolucaoPaginada, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+<div class="pull-right"> Total de Registros: @Html.Raw(@Html.Raw(ViewBag.TotalRegistros))</div>
+
+<script src="/Scripts/Views/Devolucao/FiltrosPesquisa.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Iniciar.Inicializador();
+    });
+</script>

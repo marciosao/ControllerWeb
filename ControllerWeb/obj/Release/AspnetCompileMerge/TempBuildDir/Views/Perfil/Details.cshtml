@@ -1,0 +1,42 @@
+﻿@model Domain.Entities.Perfil
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<h2>Dados do Perfil</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            <label class="control-label">Tipo Perfil</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlagTipoPerfil)
+        </dd>
+
+        <dt>
+            <label class="control-label">Super Usuário</label>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SuperUsuario)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.IdPerfil }, new { @class = "btn btn-primary" }) 
+    @Html.ActionLink("Voltar", "Index", "", new { @class = "btn btn-default" })
+    @*<input type="submit" id="btnGravar" name="Edit" value="Confirmar" class="btn btn-primary" />*@
+</p>

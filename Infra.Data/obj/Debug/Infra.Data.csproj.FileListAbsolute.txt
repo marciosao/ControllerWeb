@@ -1,0 +1,12 @@
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\Infra.Data.dll.config
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\Infra.Data.dll
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\Infra.Data.pdb
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\Domain.dll
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\EntityFramework.dll
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\Domain.pdb
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\EntityFramework.xml
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\obj\Debug\Infra.Data.csprojResolveAssemblyReference.cache
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\obj\Debug\Infra.Data.dll
+C:\inetpub\wwwroot\ControllerWeb\Infra.Data\obj\Debug\Infra.Data.pdb

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Domain.Entities.Modelo>
+
+@{
+    ViewBag.Title = "Modelo";
+}
+
+<h2>Modelo</h2>
+
+<fieldset class="fieldset">
+    <div class="form-horizontal">
+        <div class="row  pull-right">
+            <div class="col-xs-12">
+                @*<input type="submit" id="btnPesquisar" name="Index" value="Pesquisar" class="btn btn-mod-gray" />*@
+                @Html.ActionLink("Novo Modelo", "Create", "", new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+</fieldset>
+<p></p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ativo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Ativo)*@
+            @{
+                if (item.Ativo)
+                {
+                    @Html.Raw("Sim");
+                }
+                else
+                {
+                    @Html.Raw("Não");
+                }
+            }
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.IdModelo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdModelo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdModelo })*@
+            @Html.ActionLink(" ", "Edit", new { id = item.IdModelo }, new { @class = "fa fa-pencil-square-o fa-lg", @title = "Alterar Modelo" }) |
+            @Html.ActionLink(" ", "Details", new { id = item.IdModelo }, new { @class = "fa fa-file-text-o fa-lg ", @title = "Detalhes do Modelo" })
+            @*@Html.ActionLink(" ", "Delete", new { id = item.IdModelo }, new { @class = "fa fa-trash-o fa-lg", @title = "Excluir Fabricante" })*@
+
+
+        </td>
+    </tr>
+}
+
+</table>

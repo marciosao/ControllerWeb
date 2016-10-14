@@ -1,0 +1,80 @@
+﻿@model Domain.Entities.Produto
+
+@{
+    ViewBag.Title = "Detalhes do Produto";
+}
+
+<h2>Detalhes do Produto</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Código
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+
+        <dt>
+            Produto
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            Fabricante
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fabricante.Nome)
+        </dd>
+
+        <dt>
+            Modelo
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modelo.Nome)
+        </dd>
+
+        <dt>
+            Qtd. Estoque
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdEstoque)
+        </dd>
+
+        <dt>
+            Qtd. Minima Estoque
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdMinimaEstoque)
+        </dd>
+
+        <dt>
+            Avisa Estoque Minimo
+        </dt>
+
+        <dd>
+            @if (Model.AvisaEstoqueMinimo)
+            {
+                @Html.Raw("Sim");
+            }
+            else
+            {
+                @Html.Raw("Não");
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Alterar", "Edit", new { id = Model.IdProduto }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Voltar", "Index", "", new { @class = "btn btn-default" })
+</p>

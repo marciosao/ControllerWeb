@@ -1,0 +1,10 @@
+C:\inetpub\wwwroot\ControllerWeb\Application\bin\Release\Application.dll
+C:\inetpub\wwwroot\ControllerWeb\Application\bin\Release\Application.pdb
+C:\inetpub\wwwroot\ControllerWeb\Application\bin\Release\Criptografia.dll
+C:\inetpub\wwwroot\ControllerWeb\Application\bin\Release\Domain.dll
+C:\inetpub\wwwroot\ControllerWeb\Application\bin\Release\PagedList.dll
+C:\inetpub\wwwroot\ControllerWeb\Application\bin\Release\Domain.pdb
+C:\inetpub\wwwroot\ControllerWeb\Application\bin\Release\PagedList.xml
+C:\inetpub\wwwroot\ControllerWeb\Application\obj\Release\Application.csprojResolveAssemblyReference.cache
+C:\inetpub\wwwroot\ControllerWeb\Application\obj\Release\Application.dll
+C:\inetpub\wwwroot\ControllerWeb\Application\obj\Release\Application.pdb
