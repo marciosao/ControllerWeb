@@ -21,36 +21,12 @@
                 </div>
                 <div class="col-md-2">
                     <label>Fabricante</label>
-                    @*<input type="text" id="txtPesquisaFabricante" class="form-control" onkeyup="AoDigitarFabricante()" style="width:150px" />*@
                     @Html.DropDownList("IdFabricante", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
                 </div>
-                @*<div class="boxFabricante col-md-2" id="DivFabricante">
-                    @{
-                        if (ViewBag.IdFabricante != null)
-                        {
-                            foreach (var item in ViewBag.IdFabricante)
-                            {
-                                @Html.RadioButton("IdFabricante2", (string)item.Value, false, new { @Id = "rbtFabricante", @class = "rbtFabricante" }) @Html.Raw(" " + item.Text + " ")<br />
-                            }
-                        }
-                    }
-                </div>*@
                 <div class="col-md-2">
                     <label>Modelo</label>
-                    @*<input type="text" id="txtPesquisaModelo" class="form-control" onkeyup="AoDigitarModelo()" style="width:150px" />*@
                     @Html.DropDownList("IdModelo", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
                 </div>
-                @*<div class="col-md-2 boxModelo" id="DivModelo">
-                    @{
-                        if (ViewBag.IdModelo != null)
-                        {
-                            foreach (var item in ViewBag.IdModelo)
-                            {
-                                @Html.RadioButton("IdModelo", (string)item.Value, false, new { @Id = "rbtModelo", @class = "rbtModelo" }) @Html.Raw(" " + item.Text + " ")<br />
-                            }
-                        }
-                    }
-                </div>*@
             </div>
             <p></p>
             <div class="row  pull-right">
@@ -123,9 +99,6 @@
                 <td>
                     @Html.ActionLink(" ", "Edit", new { id = item.IdProduto }, new { @class = "fa fa-pencil-square-o fa-lg", @title = "Alterar Produto" }) |
                     @Html.ActionLink(" ", "Details", new { id = item.IdProduto }, new { @class = "fa fa-file-text-o fa-lg ", @title = "Detalhes do Produto" }) |
-                    @*@Html.ActionLink(" ", "Delete", new { id = item.IdProduto }, new { @class = "fa fa-trash-o fa-lg", @title = "Excluir Produto" })*@
-                    @*@Html.ActionLink(" ", "Estoque", new { id = item.IdProduto }, new { @class = "fa fa-stack-overflow fa-lg", @title = "Adicionar Produto ao Estoque", @style = "color:red" })*@
-
                     @Ajax.ActionLink(" ", "PesquisarProdutoAdicionarEstoque", "Produtos",
                                                         new { pIdCodigoProduto = item.IdProduto },
                                                         new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "ConteudoProdutos", OnSuccess = "OnExibirPopUpPesquisaProdutos", InsertionMode = InsertionMode.Replace },

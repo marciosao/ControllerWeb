@@ -112,10 +112,8 @@ namespace ControllerWeb.Controllers
         {
             var lProduto = _produtoApp.ObtemPorId(id);
 
-            ViewBag.IdFabricante = new SelectList(_fabricanteApp.ObtemFabricantePorFiltro(lProduto.Fabricante), "IdFabricante", "Nome");
-            ViewBag.IdFabricanteSelecionado = lProduto.Fabricante.IdFabricante;
-            ViewBag.IdModelo = new SelectList(_modeloApp.ObtemModeloPorFiltro(lProduto.Modelo), "IdModelo", "Nome");
-            ViewBag.IdModeloSelecionado = lProduto.Modelo.IdModelo;
+            ViewBag.IdFabricante = new SelectList(_fabricanteApp.ObtemTodos(), "IdFabricante", "Nome", lProduto.Fabricante.IdFabricante);
+            ViewBag.IdModelo = new SelectList(_modeloApp.ObtemTodos(), "IdModelo", "Nome", lProduto.Modelo.IdModelo);
 
             return View(lProduto);
         }
