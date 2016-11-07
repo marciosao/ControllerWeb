@@ -43,25 +43,21 @@
         }
     }
                 }
-                <div class="col-md-2">
+                @*<div class="col-md-2">
                     <label>Fabricante</label>
                     <input type="text" id="txtPesquisaFabricante" class="form-control" onkeyup="AoDigitarFabricante()" style="width:150px" value="@lNomeFabricante" />
-                    @*@Html.DropDownList("IdFabricante", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
-
-                    @Html.DropDownListFor(model => model.Fabricante, ((IEnumerable<Fabricante>)ViewBag.IdFabricante).Select(f => new SelectListItem
-               {
-                   Text = f.Nome,
-                   Value = f.IdFabricante.ToString(),
-                   Selected = (Model != null) && (Model.IdFabricante == f.IdFabricante)
-               }), "Escolha um Período", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible" })*@
-
+                </div>*@
+                <div class="col-md-2">
+                    <label>Fabricante</label>
+                    @*<input type="text" id="txtPesquisaFabricante" class="form-control" onkeyup="AoDigitarFabricante()" style="width:150px" />*@
+                    @Html.DropDownList("IdFabricante", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
                 </div>
-                <div class="boxFabricante col-md-2" id="DivFabricante">
+                @*<div class="boxFabricante col-md-2" id="DivFabricante">
                     @{
                         @Html.RadioButton("IdFabricante", lIdFabricante, false, new { @class = "rbtFabricante" }) @Html.Raw(" " + lNomeFabricante + " ")<br />
                      }
                     @Html.ValidationMessageFor(model => model.Fabricante, "", new { @class = "text-danger" })
-                </div>
+                </div>*@
                 <div class="col-md-2">
                     @{
     var lNomeModelo = string.Empty;
@@ -76,21 +72,7 @@
     }
                     }
                     <label>Modelo</label>
-                    <input type="text" id="txtPesquisaModelo" class="form-control" onkeyup="AoDigitarModelo()" style="width:150px" value="@lNomeModelo" />
-                </div>
-                <div class="col-md-2 boxModelo" id="DivModelo">
-
-                    @{
-    //if (ViewBag.IdModelo != null)
-    //{
-    //    foreach (var item in ViewBag.IdModelo)
-    //    {
-    @*@Html.RadioButton("IdModelo", (string)item.Value, false, new { @class = "rbtModelo" }) @Html.Raw(" " + item.Text + " ")<br />*@
-                        @Html.RadioButton("IdModelo", lIdModelo, false, new { @class = "rbtModelo" }) @Html.Raw(" " + lNomeModelo + " ")<br />
-    //    }
-    //}
-                    }
-                    @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
+                    @Html.DropDownList("IdModelo", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
                 </div>
             </div>
             <p></p>

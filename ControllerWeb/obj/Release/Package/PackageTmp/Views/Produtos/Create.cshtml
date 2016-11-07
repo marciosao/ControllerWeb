@@ -30,38 +30,12 @@
                 </div>
                 <div class="col-md-2">
                     <label>Fabricante</label>
-                    @*<input type="text" id="txtPesquisaFabricante" class="form-control" onkeyup="AoDigitarFabricante()" style="width:150px" />*@
                     @Html.DropDownList("IdFabricante", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
                 </div>
-                @*<div class="boxFabricante col-md-2" id="DivFabricante">
-                    @{
-                            if (ViewBag.IdFabricante != null)
-                            {
-                                foreach (var item in ViewBag.IdFabricante)
-                                {
-                        @Html.RadioButton("IdFabricante", (string)item.Value, false, new { @class = "rbtFabricante" }) @Html.Raw(" " + item.Text + " ")<br />
-                                }
-                            }
-                    }
-                    @Html.ValidationMessageFor(model => model.Fabricante, "", new { @class = "text-danger" })
-                </div>*@
                 <div class="col-md-2">
                     <label>Modelo</label>
-                    @*<input type="text" id="txtPesquisaModelo" class="form-control" onkeyup="AoDigitarModelo()" style="width:150px" />*@
                     @Html.DropDownList("IdModelo", null, "Selecione", new { @class = "js-example-basic-single js-states form-control select2-hidden-accessible", @style = "width:150px" })
                 </div>
-                @*<div class="col-md-2 boxModelo" id="DivModelo">
-                    @{
-                            if (ViewBag.IdModelo != null)
-                            {
-                                foreach (var item in ViewBag.IdModelo)
-                                {
-                        @Html.RadioButton("IdModelo", (string)item.Value, false, new { @class = "rbtModelo" }) @Html.Raw(" " + item.Text + " ")<br />
-                                }
-                            }
-                    }
-                    @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
-                </div>*@
             </div>
             <p></p>
             <div class="row">
@@ -117,12 +91,10 @@
                             'pIdFabricante': pFabricante
                         },
                         success: function (Result) {
-                            //console.log(JSON.parse(Result));
                             var items = '<div class="boxFabricante col-md-3" id="DivFabricante" style="background-color:lightgray">';
                             var items = '';
                             var rs = JSON.parse(Result);
                             for (var i in rs) {
-                                //console.log(rs[i].Value);
                                 items += "<input class='rbtFabricante' id='IdFabricante' name='IdFabricante' type='radio' value='" + rs[i].Value + "'/> " + rs[i].Text + " <br />";
                             }
                             items += "</div>"
@@ -152,7 +124,6 @@
                             'pModelo': pModelo
                         },
                         success: function (Result) {
-                            //console.log(JSON.parse(Result));
                             var items = '';
                             var rs = JSON.parse(Result);
                             for (var i in rs) {

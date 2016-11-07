@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\Desenvolvimento\Projetos\Comcal\ControllerWeb Versao 01.03.00\ControllerWeb</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\Desenvolvimento\Projetos\Comcal\ControllerWeb Versao 01.04.00\ControllerWeb</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -37,7 +37,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/07/2016 18:53:02</publishTime>
     </File>
     <File Include="bin/ControllerWeb.dll">
-      <publishTime>09/14/2016 20:46:34</publishTime>
+      <publishTime>11/04/2016 19:43:45</publishTime>
     </File>
     <File Include="bin/Criptografia.dll">
       <publishTime>10/08/2015 15:32:27</publishTime>
@@ -58,7 +58,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/21/2014 05:27:18</publishTime>
     </File>
     <File Include="bin/Infra.Data.dll">
-      <publishTime>09/14/2016 20:46:29</publishTime>
+      <publishTime>11/04/2016 19:43:40</publishTime>
     </File>
     <File Include="bin/it/Microsoft.SqlServer.Types.resources.dll">
       <publishTime>02/21/2014 05:26:02</publishTime>
@@ -685,7 +685,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/10/2016 23:04:48</publishTime>
     </File>
     <File Include="Views/Produtos/Create.cshtml">
-      <publishTime>08/20/2016 16:02:31</publishTime>
+      <publishTime>11/04/2016 19:39:36</publishTime>
     </File>
     <File Include="Views/Produtos/Delete.cshtml">
       <publishTime>07/07/2016 07:49:10</publishTime>
@@ -694,10 +694,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/19/2016 08:54:01</publishTime>
     </File>
     <File Include="Views/Produtos/Edit.cshtml">
-      <publishTime>08/21/2016 06:35:35</publishTime>
+      <publishTime>11/04/2016 14:37:24</publishTime>
     </File>
     <File Include="Views/Produtos/Index.cshtml">
-      <publishTime>08/21/2016 07:36:36</publishTime>
+      <publishTime>11/04/2016 19:29:17</publishTime>
     </File>
     <File Include="Views/Produtos/PartialEntradaEstoque.cshtml">
       <publishTime>08/05/2016 15:31:27</publishTime>
@@ -736,10 +736,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/05/2016 11:16:57</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>09/14/2016 20:43:39</publishTime>
+      <publishTime>11/04/2016 19:40:52</publishTime>
     </File>
     <File Include="Views/Vendas/Create.cshtml">
-      <publishTime>09/03/2016 18:37:47</publishTime>
+      <publishTime>11/04/2016 19:31:29</publishTime>
     </File>
     <File Include="Views/Vendas/Delete.cshtml">
       <publishTime>07/01/2016 13:03:17</publishTime>
@@ -778,7 +778,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/27/2016 13:19:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/14/2016 20:46:39</publishTime>
+      <publishTime>11/04/2016 19:43:47</publishTime>
     </File>
   </ItemGroup>
 </Project>
